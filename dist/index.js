@@ -216,7 +216,6 @@ function getConfig(client, configPath, configRepo) {
         const response = yield client.repos.getContent({
             owner: github.context.repo.owner,
             repo: configRepo,
-            ref: github.context.sha,
             path: configPath
         });
         const content = yield Buffer.from(response.data.content, response.data.encoding).toString();

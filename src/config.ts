@@ -96,7 +96,6 @@ export async function getConfig(
   const response: any = await client.repos.getContent({
     owner: github.context.repo.owner,
     repo: configRepo,
-    ref: github.context.sha,
     path: configPath
   })
 
