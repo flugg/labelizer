@@ -4,6 +4,7 @@ import reporter from 'io-ts-reporters'
 import {isRight} from 'fp-ts/Either'
 import {GitHub} from '@actions/github/lib/utils'
 import * as github from '@actions/github'
+import { info } from '@actions/core'
 
 const Matcher = t.partial({
   title: t.string,
@@ -92,6 +93,8 @@ export async function getConfig(
   configPath: string,
   configRepo: string
 ): Promise<Config> {
+  info(JSON.stringify(github.context.repo))
+  info(configRepo)
   const response: any = await client.repos.getContent({
     owner: github.context.repo.owner,
     repo: configRepo,
