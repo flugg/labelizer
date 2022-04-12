@@ -1,3 +1,4 @@
+import {info} from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 import {isRight} from 'fp-ts/Either'
@@ -92,11 +93,16 @@ export async function getConfig(
   configPath: string,
   configRepo: string
 ): Promise<Config> {
+  const [owner, repo] = configRepo.split('/')
+  info(github.context.payload.repository?.full_name || '')
+
   const response: any = await client.repos.getContent({
-    owner: github.context.repo.owner,
-    repo: configRepo,
+    owner,
+    repo,
     ref:
-      configRepo === github.context.repo.repo ? github.context.sha : undefined,
+      configRepo === `${github.context.repo.owner}/${github.context.repo.repo}`
+        ? github.context.sha
+        : undefined,
     path: configPath
   })
 

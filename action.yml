@@ -12,7 +12,7 @@ inputs:
     required: false
   config-repo:
     description: 'The repository for the label configurations'
-    default: ${{ github }}
+    default: ${{ github.repository }}
     required: false
   github-token:
     description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'

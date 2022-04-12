@@ -135,6 +135,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getConfig = exports.parse = void 0;
+const core_1 = __nccwpck_require__(2186);
 const github = __importStar(__nccwpck_require__(5438));
 const Either_1 = __nccwpck_require__(7534);
 const t = __importStar(__nccwpck_require__(5428));
@@ -212,11 +213,16 @@ function parse(content) {
 }
 exports.parse = parse;
 function getConfig(client, configPath, configRepo) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        const [owner, repo] = configRepo.split('/');
+        core_1.info(((_a = github.context.payload.repository) === null || _a === void 0 ? void 0 : _a.full_name) || '');
         const response = yield client.repos.getContent({
-            owner: github.context.repo.owner,
-            repo: configRepo,
-            ref: configRepo === github.context.repo.repo ? github.context.sha : undefined,
+            owner,
+            repo,
+            ref: configRepo === `${github.context.repo.owner}/${github.context.repo.repo}`
+                ? github.context.sha
+                : undefined,
             path: configPath
         });
         const content = yield Buffer.from(response.data.content, response.data.encoding).toString();
