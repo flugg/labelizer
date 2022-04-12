@@ -216,6 +216,7 @@ function getConfig(client, configPath, configRepo) {
         const response = yield client.repos.getContent({
             owner: github.context.repo.owner,
             repo: configRepo,
+            ref: configRepo === github.context.repo.repo ? github.context.sha : undefined,
             path: configPath
         });
         const content = yield Buffer.from(response.data.content, response.data.encoding).toString();
@@ -362,6 +363,7 @@ const checks_1 = __nccwpck_require__(2321);
 const githubToken = core.getInput('github-token');
 const configPath = core.getInput('config-path', { required: true });
 const configRepo = core.getInput('config-repo');
+core.info(`Running with config repo: ${configRepo}`);
 const client = github.getOctokit(githubToken);
 const payload = github.context.payload.pull_request || github.context.payload.issue;
 if (!(payload === null || payload === void 0 ? void 0 : payload.number)) {

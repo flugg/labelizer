@@ -8,6 +8,8 @@ const githubToken = core.getInput('github-token')
 const configPath = core.getInput('config-path', {required: true})
 const configRepo = core.getInput('config-repo')
 
+core.info(`Running with config repo: ${configRepo}`)
+
 const client = github.getOctokit(githubToken)
 const payload =
   github.context.payload.pull_request || github.context.payload.issue

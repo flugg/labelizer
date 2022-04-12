@@ -1,4 +1,3 @@
-import {info} from '@actions/core'
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
 import {isRight} from 'fp-ts/Either'
@@ -96,6 +95,8 @@ export async function getConfig(
   const response: any = await client.repos.getContent({
     owner: github.context.repo.owner,
     repo: configRepo,
+    ref:
+      configRepo === github.context.repo.repo ? github.context.sha : undefined,
     path: configPath
   })
 
