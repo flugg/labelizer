@@ -135,7 +135,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getConfig = exports.parse = void 0;
-const core_1 = __nccwpck_require__(2186);
 const github = __importStar(__nccwpck_require__(5438));
 const Either_1 = __nccwpck_require__(7534);
 const t = __importStar(__nccwpck_require__(5428));
@@ -214,11 +213,9 @@ function parse(content) {
 exports.parse = parse;
 function getConfig(client, configPath, configRepo) {
     return __awaiter(this, void 0, void 0, function* () {
-        core_1.info(JSON.stringify(github.context.repo));
-        core_1.info(configRepo);
         const response = yield client.repos.getContent({
             owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
+            repo: configRepo,
             ref: github.context.sha,
             path: configPath
         });
