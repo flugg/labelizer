@@ -1,10 +1,10 @@
-import * as yaml from 'js-yaml'
+import {info} from '@actions/core'
+import * as github from '@actions/github'
+import {GitHub} from '@actions/github/lib/utils'
+import {isRight} from 'fp-ts/Either'
 import * as t from 'io-ts'
 import reporter from 'io-ts-reporters'
-import {isRight} from 'fp-ts/Either'
-import {GitHub} from '@actions/github/lib/utils'
-import * as github from '@actions/github'
-import { info } from '@actions/core'
+import * as yaml from 'js-yaml'
 
 const Matcher = t.partial({
   title: t.string,
@@ -97,7 +97,7 @@ export async function getConfig(
   info(configRepo)
   const response: any = await client.repos.getContent({
     owner: github.context.repo.owner,
-    repo: configRepo,
+    repo: github.context.repo.repo,
     ref: github.context.sha,
     path: configPath
   })
